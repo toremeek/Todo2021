@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const StyledBar = styled.section`
 background: white;
-width: 90%;
+width: auto;
 color: black;
 display: flex;
 flex-direction: row;
@@ -29,16 +29,52 @@ display: flex;
 justify-content: space-around;
 flex-direction: column;
 margin: auto;
+text-align: left;
 input{
   margin-bottom: 1rem;
-  width: 50%;
+  width: 40%;
   height: 2rem;
   border-radius: 5px;
 }
 textarea{
-  width: 100%;
+  max-width: 90%;
   border-radius: 5px;
+  
 }
+button{
+  min-width: 100px;
+  width: 20%;
+  margin: 1rem 9% 0 auto;
+  color: white;
+  background-color: teal;
+  border: none;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  font-size: .8rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+label{
+  font-size: .9rem;
+  font-weight: bold;
+}
+`;
+
+const CardSection = styled.section`
+display: flex;
+justify-content: space-evenly;
+flex-direction: row;
+flex-wrap: wrap;
+
+
+width: 70%;
+margin: auto;
+`;
+
+const StyledDiv = styled.div`
+text-align: left;
+margin-top: 3rem;
 `;
 
 function App() {
@@ -60,6 +96,7 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setTodoList([...todoList, {...todoData}]);
+    setTodoData({title: "", todo: ""})
    
   }
   return (
@@ -70,15 +107,22 @@ function App() {
         <StyledForm onSubmit={handleSubmit} method="post" action="#">
           <label htmlFor="title">Tittel</label>
           <input placeholder="Tittel" id="title" name="title" type="text" value={todoData.title} onChange={handleTodoData}/>
-          <label htmlFor="todo">Din Todo</label>
+          <label htmlFor="todo">Content</label>
           <textarea id="todo" rows="5" name="todo" columns="50" placeholder="Skriv inn det du må huske" value={todoData.todo} onChange={handleTodoData}/>
           <button type="submit">Add</button>
 
           </StyledForm> 
+          {todoList?.length > 0 ? (
+          <StyledDiv>
+          <h2>My todos</h2>
+          <p>You have got {todoList.length} todo(s)</p>
+          </StyledDiv>
+        ) : <StyledDiv><h2>No Todos</h2></StyledDiv>}
       </StyledInputSection>
-      <section>
+      
+      <CardSection>
         <Cards todoList={todoList} setTodoList={setTodoList}/>
-      </section>
+      </CardSection>
      </>
     </div>
   );
